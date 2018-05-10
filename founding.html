@@ -1,0 +1,137 @@
+{=include file="public/header.html"=}
+<style>
+    body{background-color: #d52323;}
+    .foundback{background-repeat: no-repeat;background-size: 100%}
+    .founding01{width:100%;height:10.1rem;background-color: #d52323;background-image: url("/weixin/images/one03.jpg");}
+    .founding02{padding: .5rem 0 .2rem;color: #feec4e;letter-spacing:1px;}
+    .founding03{width: 100%;position: relative;height: 3.5rem}
+    .found3Img{background-image: url("/weixin/images/22.png");width: 84%;height: 2.3rem;position: absolute;top:10%;left:6%;}
+    .found3Img2{background-image: url("/weixin/images/33.png");width: 23%;height: 2.85rem;position: absolute;right:6%;top:0;}
+    .found3Img ul{padding: .1rem 0;list-style: disc;padding-left: .8rem;}
+    .found3Img ul li{line-height: .4rem;letter-spacing:1.5px;color: #763100;}
+    .founding04{background-image: url("/weixin/images/one02.jpg");height: 2.8rem}
+    .founding05{line-height: .55rem;letter-spacing:1px;color: #feec4e;}
+    .founding06{display: flex;justify-content: space-around;flex-wrap: wrap;}
+    .founding06 .ticket{width: 38%;height: 1.73rem;margin: 3% 0;}
+    .ticket{border: 1px solid rgba(255,255,0,0.5);border-radius: 5px;display: block;}
+    .ticketlt{width: 70%;border-right: 2px solid #ffff00;}
+    .ticketrt{width: 30%;color: #ffff00;font-size: .43rem; margin:0 auto;line-height: .58rem;}
+    .ticketlt .tick1{height: .5rem;line-height: .5rem;border-top-left-radius:5px;border-bottom-left-radius:5px;}
+    .ticketlt .tick2{height: .8rem;line-height: .8rem;color: #ffff00;}
+    .ticka{background-image:url("/weixin/images/11.jpg")}
+    .founding07{background-image:url("/weixin/images/one4.jpg");width: 100%;height: 1.45rem;}
+    .result{background: rgba(0, 0, 0, 0.8);text-align: center;position: fixed;left:0;top: 0;width: 100%;height: 100%;z-index: 998;display: none;}
+    .result-icon{ width: 90%;height:auto;border-radius: 5px;position: absolute;right: 0;top: 15%;left:0;bottom:0;margin:0 auto;text-decoration: none;}
+    .result-icon .download ul li{margin-bottom: .1rem;}
+    .result-cancel{display:block;width: .55rem;height: .55rem;position: absolute;right:5%;top:5%;border-radius: 50%;}
+    .result-cancel span{line-height: .55rem;}
+</style>
+<section class="g-flexview" >
+    <div class="result" id="Tip">
+        <a class="result-cancel border_light" onclick="cancel()">
+            <span class="fontS10 fontC9">X</span>
+        </a>
+        <div class="result-icon">
+            <div class="download">
+               <ul class="fontC9 fontS7 fontLeft" style="line-height: .55rem;letter-spacing:1px;">
+                   <li>1.车主1元抢占初始会员资格，如果发生意外事故，就不需要再顾虑生效期，只要认证通过，单次充值项目就可以使用</li>
+                   <li>2.抢占后1元可单独享受最高500元单面喷漆服务</li>
+                   <li>3.1元喷漆服务在购买99、199或518项目后使用。（比如用户只购买了轮胎宝，那在轮胎宝的基础上，我们赠送了一个价值500元的单面喷漆服务。）</li>
+                   <li>4.1元喷漆服务需购买项目达到使用条件后方可使用。（比如用户购买了轮胎宝，轮胎宝项目审核生效后并到达使用条件，500元的单面喷漆服务生效。）</li>
+                   <li>5.会员邀请新用户购买99元可获得20元现金奖励。现金奖励在新用户审核通过后可提现10元，另外10元可以冲抵产品价格，邀请越多，得到越多</li>
+                   <li>6.创始会员可提前进入观察期，一旦发生事故即可充值享受事故维修服务</li>
+                   <li>7.最终解释权归四川百橙科技有限公司</li>
+               </ul>
+            </div>
+            <div class="clear" style="height: .5rem"></div>
+        </div>
+    </div>
+    <div class="g-scrollview">
+        <div class="founding01 foundback"></div>
+        <div class="founding02 fontCenter fontS7">
+            恭喜您已成为创始会员
+        </div>
+        <div class="founding03">
+            <div class="found3Img foundback">
+                <ul class="fontS3">
+                    <li>创始会员终身享受创始会员资格</li>
+                    <li>创始会员可享受产品最低价待遇</li>
+                    <li>创始会员可优先升级为合伙人</li>
+                    <li>创始会员可优先升级为服务商</li>
+                    <li>创始会员享受管家一对一服务</li>
+                </ul>
+            </div>
+            <div class="found3Img2 foundback"></div>
+        </div>
+        <div class="founding04 foundback"></div>
+        <div class="founding05 fontCenter fontS7">
+            <p>尊敬的创始会员</p>
+            <p>喷漆劵需购买以下任一活动后方可使用</p>
+            <p>以下活动四选一</p>
+        </div>
+        <div class="clear" style="height: .3rem;"></div>
+        <div class="founding06">
+            <a class="ticket" href="14">
+                <div class="left ticketlt fontCenter">
+                    <div class="tick1 fontC7 fontS8 fontW" style="text-decoration:line-through;background:#ffff00">原价99元</div>
+                    <div class="tick2 fontS18">78</div>
+                    <div  style="height: .4rem;" class="tick1 fontS5 fontW ticka foundback"></div>
+                </div>
+                <div class="right ticketrt fontCenter fontW">车损宝</div>
+                <div class="clear"></div>
+            </a>
+            <a class="ticket" href="13">
+                <div class="left ticketlt fontCenter">
+                    <div class="tick1 fontC7 fontS8 fontW" style="text-decoration:line-through;background:#ffff00">原价99元</div>
+                    <div class="tick2 fontS18">78</div>
+                    <div  style="height: .4rem;" class="tick1 fontS5 fontW ticka foundback"></div>
+                </div>
+                <div class="right ticketrt fontCenter fontW">轮胎宝</div>
+                <div class="clear"></div>
+            </a>
+            <a class="ticket" href="20">
+                <div class="left ticketlt fontCenter">
+                    <div class="tick1 fontC7 fontS8 fontW" style="text-decoration:line-through;background:#ffff00">原价199元</div>
+                    <div class="tick2 fontS18">158</div>
+                    <div  style="height: .4rem;" class="tick1 fontS5 fontW ticka foundback"></div>
+                </div>
+                <div class="right ticketrt fontCenter fontW">划痕宝</div>
+                <div class="clear"></div>
+            </a>
+            <a class="ticket" href="11">
+                <div class="left ticketlt fontCenter">
+                    <div class="tick1 fontC7 fontS8 fontW" style="text-decoration:line-through;background:#ffff00">原价518元</div>
+                    <div class="tick2 fontS18">437</div>
+                    <div  style="height: .4rem;" class="tick1 fontS5 fontW ticka foundback"></div>
+                </div>
+                <div class="right ticketrt fontCenter fontW">无忧宝</div>
+                <div class="clear"></div>
+            </a>
+        </div>
+        <div class="clear" style="height: .2rem;"></div>
+        <div class="founding08 fontCenter fontC13 fontS8">
+            <a href="javascript:;" onclick="grow()">
+                <span>《</span>活动规则<span>》</span>
+            </a>
+        </div>
+        <div class="clear" style="height: .15rem;"></div>
+        <div class="founding07 foundback"></div>
+    </div>
+</section>
+{=include file="public/footer.html"=}
+<script>
+    !function (win, $) {
+        var dialog = win.YDUI.dialog;//弹出框样式
+        $('.founding06').on('click','a.ticket', function(e){
+            e.preventDefault();
+            var pid = $(this).attr('href');
+            location.href='/weixin/index/plan?id='+pid;
+        });
+    }(window, jQuery);
+    function grow() {
+        $("#Tip").css("display","block");
+    }
+    function cancel() {
+        $(".result").css("display","none")
+    }
+</script>

@@ -1,0 +1,271 @@
+{=include file="public/header.html"=}
+<style>
+    .checkUpload .check_left{width: 50%;padding: .23rem 0;}
+    .checkUpload .check_right{width: 50%;padding: .23rem 0;}
+    .checkUpimg {position: relative;width: 55%;height: 1.83rem;}
+    .checkUpimg img{width: 100%;height: 1.83rem;position:absolute;right:0; top:0;}
+    .checkUpimg input{width: 100%;height: 1.83rem;opacity:0;filter: alpha(opacity=0);position:absolute;right:0; top:0; cursor: pointer; z-index:1;}
+    .result{background: rgba(0, 0, 0, 0.8);text-align: center;position: fixed;left:0;top: 0;width: 100%;height: 100%;z-index: 998;display: none;}
+    .result-icon{ width: 90%;height:2.6rem;border-radius: 5px;position: absolute;right: 0;top: 15%;left:0;bottom:0;margin:0 auto;text-decoration: none;}
+    .result-cancel{display:block;width: .55rem;height: .55rem;position: absolute;right:5%;top:5%;border-radius: 50%;}
+    .result-cancel span{line-height: .55rem;}
+</style>
+<section class="g-flexview">
+    <div class="result" id="Tip">
+        <a class="result-cancel border_light" onclick="cancel()">
+            <span class="fontS10 fontC9">X</span>
+        </a>
+        <div class="result-icon">
+            <div class="download">
+                <img src="" alt="" id="qrCode">
+            </div>
+
+        </div>
+    </div>
+    <header class="m-navbar">
+        <a href="#" class="navbar-item"><i class="back-ico"></i></a>
+        <div class="navbar-center"><span class="navbar-title">报案</span></div>
+    </header>
+    <div class="g-scrollview">
+        <form id="report">
+            <input type="hidden" name="imgUrl" class="style">
+            <div class="m-cell">
+                <div class="cell-item">
+                    <div class="cell-left">保修车辆：</div>
+                    <label class="cell-right cell-arrow">
+                        <select class="cell-select car" id="status" name="carId">
+                        </select>
+                    </label>
+                </div>
+                <div class="cell-item">
+                    <div class="cell-left">互助方式：</div>
+                    <label class="cell-right cell-arrow">
+                        <select class="cell-select carPro"  name="orderId">
+                            <option value="">请选择互助方式</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="cell-item">
+                    <div class="cell-right">
+                        <textarea name="desc" class="cell-textarea cell-tet" placeholder="请简要描述事故(车辆受损部位，事故地点)"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="fontS6 padding_0 clear_bg">1.车辆受损近照</div>
+            <div class="checkUpload">
+                <div class="left check_left">
+                    <div class="checkUpimg" style="margin: 0 auto;">
+                        <a href="javascript:;" class="check_grow">
+                            <img class="up-img" src="/weixin/images/upload_car/up_c2.jpg" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="right check_right">
+                    <div class="checkUpimg">
+                        <input type="file"  class="up">
+                        <img class="up-img" src="/weixin/img/upImg.png" alt="">
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="fontS6 padding_0 clear_bg">2.车辆全身照</div>
+            <div class="checkUpload">
+                <div class="left check_left">
+                    <div class="checkUpimg" style="margin: 0 auto;">
+                        <a href="javascript:;" class="check_grow">
+                            <img class="up-img" src="/weixin/images/upload_car/up_c5.jpg" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="right check_right">
+                    <div class="checkUpimg">
+                        <input type="file"  class="up">
+                        <img class="up-img" src="/weixin/img/upImg.png" alt="">
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="fontS6 padding_0 clear_bg">3.车辆识别码照</div>
+            <div class="checkUpload">
+                <div class="left check_left">
+                    <div class="checkUpimg" style="margin: 0 auto;">
+                        <a href="javascript:;" class="check_grow">
+                            <img class="up-img" src="/weixin/images/upload_car/up_c3.jpg" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="right check_right">
+                    <div class="checkUpimg">
+                        <input type="file"  class="up">
+                        <img class="up-img" src="/weixin/img/upImg.png" alt="">
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </form>
+    </div>
+    <button type="button" class="btnB btn-warning">提交事故信息</button>
+    <footer class="m-tabbar">
+        <a href="#" class="tabbar-item tabbar-active">
+        <span class="tabbar-icon">
+            <i class="icon-home-outline"></i>
+        </span>
+            <span class="tabbar-txt">线索</span>
+        </a>
+        <a href="/weixin/housekeeper/order" class="tabbar-item ">
+        <span class="tabbar-icon">
+            <i class="icon-time"></i>
+        </span>
+            <span class="tabbar-txt">进度</span>
+        </a>
+        <a href="/weixin/user/index" class="tabbar-item">
+        <span class="tabbar-icon">
+            <i class="icon-ucenter-outline"></i>
+        </span>
+            <span class="tabbar-txt">个人中心</span>
+        </a>
+    </footer>
+</section>
+{=include file="public/footer.html"=}
+<script>
+!function (win, $) {
+    var dialog = win.YDUI.dialog;
+    $(".checkUpload").on("click","a.check_grow",function () {
+        var $src = $(this).children().attr("src");
+        $("#qrCode").attr("src",$src);
+        $("#Tip").css("display","block");
+    })
+    $.ajax({
+        type: 'POST',
+        url: ' /weixin/car/cars',
+        success: function(result){
+            if(result.code==0){
+                var data = result.data.length;
+                var html = "";
+                if(data==0){
+                    dialog.alert("未添加车辆审核",function () {
+                        var html = '<option value="0">还未添加无车辆</option>';
+                        $(".car").html(html);
+                    })
+                }else {
+                    for(var i =0 ;i<data;i++){
+                        var d = result.data[i]
+                        html += '<option value="'+d.id+'">'+d.car_no+'</option>';
+                    }
+                    $(".car").html(html);
+                }
+            }
+        },
+        error:function(){
+            console.log(arguments);}
+    });
+    $("#status").change(function(){
+        var  carId = $(this).val();
+        $.ajax({
+            type: 'POST',
+            url: '/weixin/car/carPro',
+            data:{carId:carId},
+            success: function(result){
+                if(result.code==0){
+                    var data = result.data.length;
+                    var html = '';
+                    if(data==0){
+                        dialog.alert("该车辆未有互助项目",function () {
+                            var html = '<option value="0">该车辆未有互助项目</option>';
+                            $(".carPro").html(html);
+                        })
+                    }else {
+                        for(var i =0 ;i<data;i++){
+                            var d = result.data[i]
+                            html += '<option value="'+d.id+'">'+d.product_name+'</option>';
+                        }
+                        $(".carPro").html(html);
+                    }
+
+                }
+            },
+            error:function(){
+                console.log(arguments);}
+        });
+    });
+    var person = "";        //图片地址拼接储存器
+    $(".checkUpload").on("change","input.up",function(){
+        var objUrl = getObjectURL(this.files[0]) ;
+        if (objUrl) {
+            $(this).parent().find(".up-img").attr("src", objUrl);
+        }
+        var formdata = new FormData();
+        formdata.append("file", $(this)[0].files[0]);
+        $.ajax({
+            url: "/weixin/upload/index",
+            type: "POST",
+            data: formdata,
+            processData: false,  // 告诉jQuery不要去处理发送的数据
+            contentType: false,   // 告诉jQuery不要去设置Content-Type请求头
+            success: function(response){
+                if(response.code===0){
+                    person += response.data.url+',';
+                }else if(response.code===403){
+                    dialog.alert("未登入，请登入");
+                    location.href = "/weixin/user/logging"
+                }else if(response.code===400100000){
+                    dialog.alert('上传图片失败');
+                }
+            },
+            error:function(){
+                dialog.alert("图片大小不超过1M");}
+        });
+    });
+
+    /*获取图片本地地址*/
+    function getObjectURL(file) {
+        var url = null ;
+        if (window.createObjectURL!=undefined) { // basic
+            url = window.createObjectURL(file) ;
+        } else if (window.URL!=undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file) ;
+        } else if (window.webkitURL!=undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file) ;
+        }
+        return url ;
+    };
+    $(".btnB").click(function () {
+        $("input[name='imgUrl']").val(person);
+        if($(".tet").val()!=""&&$(".car").val()!=0&&$(".carPro").val()!=0){
+            if(person==""){
+                dialog.alert("上传事故车辆照片")
+            }else {
+                var len = person.split(",").length;
+                if (len != 4) {
+                    dialog.alert("请上传完整事故车辆照片")
+                }else {
+                    var data=$("#form").serialize();
+                    $.ajax({
+                        type: 'POST',
+                        url: '/weixin/repair/repair',
+                        data:data,
+                        success: function(pager){ //服务器返回对象
+                            if(pager.code===0){
+                                dialog.confirm('提交成功', function () {
+                                    location.href = "/weixin/car/index"
+                                })
+                            }else {
+                                dialog.alert(pager.msg);
+                            }
+                        },
+                        error: function(){
+                            dialog.alert('系统故障，稍后再试');
+                        }
+                    });
+                }
+            }
+        }else {
+            dialog.alert("事故信息不完整")
+        }
+
+    });
+}(window, jQuery);
+    function cancel() {
+        $(".result").css("display","none")
+    }
+</script>

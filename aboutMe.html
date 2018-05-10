@@ -1,0 +1,69 @@
+{=include file="public/header.html"=}
+<style>
+    #meImg{
+    width: 100%;
+    height: 100%;
+    }
+    div.cell-icon{
+        border: 1px solid #00a9b4;
+        border-radius: 50%;
+        width: 1.3rem;
+        height: 1.3rem;
+        background-size: 100% 100%;background-image:url("/weixin/images/via.jpg");background-repeat:no-repeat;
+    }
+    .cell-meImg{line-height: 1.4rem;position: relative}
+    #upload{position:absolute; right:0; top:0;width: 100%;cursor: pointer; z-index:1; font-size:.2rem; *font-size:30px;opacity:0;filter: alpha(opacity=0);min-height: 1.4rem;}
+</style>
+<div id="preloader_1">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+<section class="g-flexview">
+    <header class="m-navbar">
+        <a href="/weixin/user/index" class="navbar-item">
+            <i class="back-ico"></i>
+        </a>
+        <div class="navbar-center">
+            <span class="navbar-title">设置</span>
+        </div>
+    </header>
+    <div class="g-scrollview">
+        <form name="form1" id="form1">
+            <div class="m-cell">
+                <a class="cell-item cell-meImg" href="javascript:;">
+                    <div class="cell-left fontC8">头像：</div>
+                    <div class="cell-right cell-arrow"><div class="cell-icon cell-img"></div></div>
+                    <input id="upload" name="file"  type="file" />
+                </a>
+                <a class="cell-item" href="/weixin/user/nickname">
+                    <div class="cell-left fontC8 fontS7">昵称：</div>
+                    <div class="cell-right cell-arrow nickName fontC8 fontS4"></div>
+                </a>
+                <a class="cell-item" href="javascript:;">
+                    <div class="cell-left fontC8 fontS7">手机号:</div>
+                    <div class="cell-right nickPhone fontC8 fontS4"></div>
+                </a>
+                <a class="cell-item" href="/weixin/user/boundPhone?loggId=3">
+                    <div class="cell-left fontC8 fontS7">密码修改:</div>
+                    <div class="cell-right cell-arrow"></div>
+                </a>
+                <a class="cell-item a_pay">
+                    <div class="cell-left fontC8 fontS7">支付密码:</div>
+                    <div class="cell-right cell-arrow is_pay fontC8 fontS4"></div>
+                </a>
+                <a class="cell-item" href="/weixin/car/index">
+                    <div class="cell-left fontC8 fontS7">互助车辆:</div>
+                    <div class="cell-right cell-arrow fontC8 fontS4">查看/完善</div>
+                </a>
+            </div>
+            <button type="button" class="btn-block btn-danger" id="meBtn">退出登录</button>
+        </form>
+    </div>
+</section>
+{=include file="public/footer.html"=}
+<script src="/weixin/js/aboutMe.js"></script>
+
+

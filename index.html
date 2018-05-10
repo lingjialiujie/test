@@ -1,0 +1,172 @@
+{=include file="public/header.html"=}
+<!--个人中心-->
+<link rel="stylesheet" href="/weixin/css/user.css">
+<div id="preloader_1">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+<section class="g-flexview">
+    <div class="result" id="Tip">
+        <div class="result-icon">
+            <div class="result_text fontC9 fontW fontS10">
+
+            </div>
+            <button type="submit" class="btnB btn-danger" onclick="cancel()">确定</button>
+        </div>
+    </div>
+    <div class="top_img"><!--个人头像-->
+        <a href="/weixin/user/aboutMe">
+            <div class="t_img"></div>
+            <div class="t_text fontW fontC9 cell-logg">请先登入</div>
+        </a>
+    </div>
+    <div class="clear_bg" style="height:.1rem;"></div>
+    <div class="m-grids-3">
+        <a href="javascript:;" class="grids-item padding_4">
+            <div class="grids-icon"><span class="join fontS8">--</span>&nbsp;天</div>
+            <div class="grids-txt"><span>加入天数</span></div>
+        </a>
+        <a href="/weixin/user/balance" class="grids-item padding_4">
+            <div class="grids-icon"><span class="money fontC7 fontS9"></span>&nbsp;元</div>
+            <div class="grids-txt"><span>维修基金</span></div>
+        </a>
+        <a href="javascript:;" class="grids-item padding_4">
+            <div class="grids-icon"><span class="term fontS8">--</span>&nbsp;份</div>
+            <div class="grids-txt"><span>互助项目</span></div>
+        </a>
+    </div>
+    <div class="clear_bg" style="height:.1rem;"></div>
+    <div class="m-grids-5 borderRt">
+        <a href="/weixin/bank/wallet" class="grids-item padding_8 ">
+            <div class="grids-icon"><img class="ydimg" src="/weixin/img/us_11.png" style="height: 100%;"></div>
+            <div class="grids-txt"><span class="fontS6">钱包</span></div>
+        </a>
+        <a href="/weixin/user/vouchers" class="grids-item padding_8 ">
+            <div class="grids-icon"><img class="ydimg" src="/weixin/img/us_21.png" style="height: 100%;"></div>
+            <div class="grids-txt"><span class="fontS6">优惠券</span></div>
+        </a>
+        <a href="/weixin/publicity/publicity" class="grids-item padding_8 ">
+            <div class="grids-icon"><img class="ydimg" src="/weixin/img/us_12.png" style="height: 100%;"></div>
+            <div class="grids-txt"><span class="fontS6">互助公示</span></div>
+        </a>
+        <a href="/weixin/store/repairShop" class="grids-item padding_8 ">
+            <div class="grids-icon"><img class="ydimg" src="/weixin/img/us_13.png" style="height: 100%;"></div>
+            <div class="grids-txt"><span class="fontS6">合作门店</span></div>
+        </a>
+        <a href="/weixin/user/invite" class="grids-item padding_8 ">
+            <div class="grids-icon"><img class="ydimg" src="/weixin/img/us_14.png" style="height: 100%;"></div>
+            <div class="grids-txt"><span class="fontS6">邀请有礼</span></div>
+        </a>
+    </div>
+    <div class="clear_bg" style="height:.1rem;"></div>
+    <div class="g-scrollview">
+        <div class="m-cell" style="margin-bottom: 0">
+            <a class="cell-item" href="/weixin/user/founding">
+                <div class="cell-left"><span class="cell-icon"><img class="ydimg" src="/weixin/img/us_15.png" /></span>创始会员</div>
+                <div class="cell-right cell-arrow">特权</div>
+            </a>
+            <a class="cell-item" href="/weixin/user/record">
+                <div class="cell-left"><span class="cell-icon"><img class="ydimg" src="/weixin/img/us_03.png" /></span>订单中心</div>
+                <div class="cell-right cell-arrow"></div>
+            </a>
+            <a class="cell-item" href="/weixin/car/index">
+                <div class="cell-left"><span class="cell-icon"><img class="ydimg" src="/weixin/img/us_10.png" /></span>车辆认证</div>
+                <div class="cell-right cell-arrow"></div>
+            </a>
+            <a class="cell-item cell-logg" href="/weixin/user/aboutMe">
+                <div class="cell-left"><span class="cell-icon"><img class="ydimg" src="/weixin/img/us_04.png" /></span>个人信息</div>
+                <div class="cell-right cell-arrow">个人/车辆信息、资料完善</div>
+            </a>
+            <a class="cell-item cell-status" href="javascript:;">
+                <div class="cell-left"><span class="cell-icon"><img class="ydimg" src="/weixin/img/us_05.png" /></span>服务商</div>
+                <div class="cell-right cell-arrow cell-text">申请</div>
+            </a>
+            <div class="clear_bg" style="height:.1rem;"></div>
+            <!--<a class="cell-item" href="/weixin/store/repairShop">-->
+                <!--<div class="cell-left"><span class="cell-icon"><img class="ydimg" src="/weixin/img/us_10.png" /></span>车辆维修</div>-->
+                <!--<div class="cell-right cell-arrow"></div>-->
+            <!--</a>-->
+            <a class="cell-item" href="/weixin/publicity/answer">
+                <div class="cell-left"><span class="cell-icon"><img class="ydimg" src="/weixin/img/us_06.png" /></span>常见问题</div>
+                <div class="cell-right cell-arrow"></div>
+            </a>
+            <a class="cell-item" href="tel:02867871559">
+                <div class="cell-left"><span class="cell-icon"><img class="ydimg" src="/weixin/img/us_07.png" /></span>客户服务</div>
+                <div class="cell-right cell-arrow">028-67871559</div>
+            </a>
+            <a class="cell-item" href="/weixin/publicity/opinion">
+                <div class="cell-left"><span class="cell-icon"><img class="ydimg" src="/weixin/img/us_08.png" /></span>意见反馈</div>
+                <div class="cell-right cell-arrow"></div>
+            </a>
+            <a class="cell-item" href="/weixin/publicity/about">
+                <div class="cell-left"><span class="cell-icon"><img class="ydimg" src="/weixin/img/us_09.png" /></span>关于我们</div>
+                <div class="cell-right cell-arrow"></div>
+            </a>
+        </div>
+    </div>
+    {=include file="public/bottom.html"=}
+</section>
+{=include file="public/footer.html"=}
+<script>
+    !function (win, $){
+        var dialog = win.YDUI.dialog;
+        $("#a4").addClass("tabbar-active");
+        $.get("/weixin/user/userInfo",function(result){
+            if(result.code===0){
+                $("#preloader_1").css("display","none");
+                var data = result.data;
+                /***0是会员，1是代理商，2是修理厂，3是合伙人***/
+                /***审核状态：0待审核，1通过，2拒绝***/
+                if(data.is_agent==1&&data.status==0){
+                    $(".cell-text").text("待审核")
+                    $(".cell-status").attr("onclick","pending()");
+                }else if(data.is_agent==1&&data.status==1){
+                    $(".cell-text").text("进入中心");
+                    sessionStorage["imgurl"] = data.icon;
+                    $(".cell-status").attr("onclick","adopt()");
+                }else if(data.is_agent==1&&data.status==2){
+                    $(".cell-text").text("申请未通过");
+                    $(".cell-status").attr("onclick","refuse()");
+                }else if(data.is_agent==0){
+                    $(".cell-status").attr("onclick","apply()");
+                }else  if(data.is_agent==2){
+                    $(".cell-status").attr("onclick","apply()");
+                }
+                var price =parseFloat(data.account).toFixed(2);
+                $(".t_text").text(data.nickname);
+                $(".join").text(data.join_day);
+                $(".money").text(price);
+                $(".term").text(data.orders);
+                var imgurl = data.icon
+                if(imgurl!=""||imgurl!=null||imgurl!="null"){
+                    $(".t_img").css("background-image",'url(' + imgurl + ')');
+                };
+            }else {
+                dialog.alert("系统繁忙,加载数据失败")
+            }
+        })
+
+    }(window, jQuery)
+    function adopt() {//审核通过后
+        location.href = "/weixin/agent/index"
+    }
+    function pending() {
+        $(".result_text").text("审核中，请耐心等待")
+        $(".result").css("display","block")
+    }
+    function refuse() {
+        $(".result_text").text("审核未通过,如有疑问请联系客服")
+        $(".result").css("display","block")
+    }
+    function cancel() {
+        $(".result").css("display","none")
+    }
+    function apply() {
+        location.href = "/weixin/partner/proxy"
+    }
+</script>
+
+

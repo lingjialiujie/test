@@ -1,0 +1,54 @@
+{=include file="public/header.html"=}
+<style>
+    #enquing{padding: .23rem;}
+    #enBtn{padding: .5rem;}
+    .remind{padding: .23rem;}
+    .remText{color: #878787;line-height: .4rem;}
+    .remText span{color: red;font-size: .34rem;}
+</style>
+<header class="m-navbar">
+    <a href="javascript:history.go(-1)" class="navbar-item">
+        <i class="back-ico"></i>
+    </a>
+    <div class="navbar-center">
+        <span class="navbar-title">退款申请</span>
+    </div>
+    <div class="navbar-item">
+        <a href="/weixin/user/index">
+            <i class="icon-ucenter-outline" style="font-size: .5rem"></i>
+        </a>
+    </div>
+</header>
+<div id="enquing">
+    <div class="m-cell">
+        <div class="cell-item sum">
+            <div class="cell-left balance"></div>
+            <div class="cell-right"><span class="price fontS8"></span>&nbsp;元</div>
+        </div>
+        <div class="cell-item">
+            <div class="cell-left car"></div>
+            <div class="cell-right status"></div>
+        </div>
+        <!--<div class="cell-item">-->
+            <!--<div class="cell-left carTime"></div>-->
+            <!--<div class="cell-right status"></div>-->
+        <!--</div>-->
+    </div>
+</div>
+<div class="remind">
+    <div class="m-celltitle">申请退款理由</div>
+    <div class="m-cell">
+        <div class="cell-item">
+            <div class="cell-right">
+                <textarea class="cell-textarea" placeholder=""></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="enBtn">
+    <button type="submit" class="btn-block btn-danger">申请退款</button>
+</div>
+{=include file="public/footer.html"=}
+<script src="/weixin/js/islogin.js"></script>
+<script src="/weixin/js/balanceEnquing.js"></script>
+

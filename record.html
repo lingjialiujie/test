@@ -1,0 +1,265 @@
+{=include file="public/header.html"=}
+<style>
+    .J_List li{margin-bottom:8px;box-shadow: 0 1px 10px #c7c7c7;border: 1px solid #f0eff5;border-radius: 6px;}
+    .J_List .repair{padding: .1rem;}
+    .J_List .repair .repairImg{width: 35%;padding: .1rem;}
+    .J_List .repair .repairImg img{width: 100%;height: 1.65rem;}
+    .J_List .repair .repairTet{width: 64%;}
+    .J_List .repair::after{content: "";display: block;clear: both;}
+    .J_List .repair .repairTet .repairName,.repairGap{display: inline-block;text-align: center;border-radius: 5px;background: #ff9933;color:#fff;}
+    .J_List .repair .repairTet .repairName{font-size: .24rem;width: 45%;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}
+    .J_List .repair .repairTet .repairGap{font-size: .24rem;width: 45%;overflow: hidden;margin-left:5%}
+    .J_List .repair .repairTet .repairPlace{overflow: hidden;text-overflow:ellipsis;white-space: nowrap;display: inline-block;width:100%}
+    .J_List .repair .repairTet p{line-height: .46rem;height: .46rem}
+</style>
+<div id="preloader_1">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+<header class="m-navbar">
+    <a href="/weixin/user/index" class="navbar-item">
+        <i class="back-ico"></i>
+    </a>
+    <div class="navbar-center">
+        <span class="navbar-title">我的订单</span>
+    </div>
+    <div class="navbar-item">
+        <a href="/weixin/user/index">
+            <i class="icon-ucenter-outline" style="font-size: .5rem"></i>
+        </a>
+    </div>
+</header>
+<div class="m-tab" data-ydui-tab><!-- 这里添加data-ydui-tab就可以啦 -->
+    <ul class="tab-nav">
+        <li class="tab-nav-item tab-active"><a href="javascript:;">已支付</a></li>
+        <li class="tab-nav-item"><a href="javascript:;">未支付</a></li>
+    </ul>
+    <div class="tab-panel">
+        <div class="tab-panel-item tab-active J_List" id="already">
+            <ul id="J_ListReady"></ul>
+        </div>
+        <div class="tab-panel-item  J_List " id="Stay">
+            <ul id="J_ListContent"></ul>
+        </div>
+    </div>
+</div>
+{=include file="public/footer.html"=}
+<script src="/weixin/js/islogin.js"></script>
+<script>
+    !function (win, $) {
+        var dialog = win.YDUI.dialog;
+        var upage = 1, pageSize = 20;
+//        未支付
+        $('#Stay').infiniteScroll({
+            pageSize: pageSize,
+            initLoad: true,
+            loadingHtml: '<strong>加载中...</strong>', /* 当然也可以<img src="../img/loading.gif" /> */
+            loadListFn: function () {
+                var def = $.Deferred();
+                /* 通过自定义的方法获取数据 */
+                $.ajax({
+                    type: 'POST',
+                    url: '/weixin/order/orderList',
+                    dataType: 'json',
+                    data:{status:0,page:upage},
+                    success: function(ret) {
+                        if(ret.code==0){
+                            $("#preloader_1").css("display","none");
+                        }
+                        var len = ret.data.data.length;
+                        if(len!=0){
+                            var html = "";
+                            for(var i = 0;i<len;i++){
+                                var data = ret.data.data[i];
+                                    if(data.car_no==""||data.car_no==null){
+                                        if(data.order_type==2){
+                                            data.car_no = data.status;
+                                        }else {
+                                            data.car_no = "未绑定车辆"
+                                        }
+                                    }
+
+                                html += ' <li class="list_form">\n' +
+                                    '            <div class="repair">\n' +
+                                    '                <div class="repairImg left">\n' +
+                                    '                    <img src="/weixin/images/logo2.jpg" alt="">\n' +
+                                    '                </div> <!--图片展示区域-->\n' +
+                                    '                <div class="repairTet right">\n' +
+                                    '                    <p><span class="repairPresent" style="margin-right: .1rem;">'+data.product_name+'</span><span class="repairCarN0">'+data.car_no+'</span></p>\n' +
+                                    '                    <p><span class="repairPhone">订单号:'+data.order_sn+'</span></p>\n' +
+                                    '                    <p><span class="repairPlace">支付金额：'+data.product_amount+'</span></p>\n' +
+                                    '                    <p><span class="repairTime">购买日期：'+data.create_time+'</span></p>\n' +
+                                    '                    <p><a href="'+data.id+'" class="repairName">删除订单</a><a href="'+data.id+'" id="'+data.order_type+'" name="'+data.product_id+'" class="repairGap">前去支付</a></p>\n' +
+                                    '                </div> <!--文本区域-->\n' +
+                                    '            </div>\n' +
+                                    '      </li>';
+                            };
+                            $('#J_ListContent').append(html);
+
+                            /* 获取数据，并插入页面后，调用resole，并传入当前获取的记录列表集合 */
+                            def.resolve(ret.data.data);
+
+                            /* 页码自增1 */
+                            ++upage;
+                        }else {
+                            if(upage>1){
+                                $("#Stay .list-loading").text("亲,已全部显示");
+                            }else {
+                                $("#Stay .list-loading").text("暂时无数据");
+                                $("")
+                            }
+                        }
+
+                    }
+                });
+
+                return def.promise();
+            }
+        });
+        $('#Stay').on('click','a.repairName', function(e){
+            e.preventDefault();
+            var cid = $(this).attr('href');
+            dialog.confirm('确认删除订单', function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '/weixin/order/cancelOrder',
+                    data:{orderId:cid},
+                    success: function(pager){
+                        if(pager.code===0){
+                            var $d = $("[href="+cid+"]").parent().parent().parent().parent();
+                            $d.attr("id","t1");
+                            $("#t1").remove();
+                        }else {
+                            dialog.alert("无法删除");
+                        }
+                    },
+                    error: function(){},
+                });
+            });
+
+        });
+        $('#Stay').on('click','a.repairGap', function(e){
+            e.preventDefault();
+            var id = $(this).attr('href'),type = $(this).attr("id") ,pid = $(this).attr("name");
+               if(type==2){
+                   location.href = "/weixin/index/payment?id="+id+"&pid="+pid;
+               }else {
+                   var carNo = $(this).parent().parent().find(".repairCarN0").text();
+                   var searchUrl =encodeURI("/weixin/index/travel?id="+id+"&pid="+pid+"&carNo="+carNo);
+                   window.location.href =searchUrl;
+               }
+        });
+        var page = 1;
+//       已支付
+        $('#already').infiniteScroll({
+            binder: '#J_List',
+            pageSize: pageSize,
+            initLoad: true,
+            loadingHtml: '<strong>加载中...</strong>', /* 当然也可以<img src="../img/loading.gif" /> */
+            loadListFn: function () {
+                var def = $.Deferred();
+                /* 通过自定义的方法获取数据 */
+                $.ajax({
+                    type: 'POST',
+                    url: '/weixin/order/orderList',
+                    dataType: 'json',
+                    data:{status:1,page:page},
+                    success: function(ret) {
+                        var len = ret.data.data.length;
+                        if(len!=0){
+                            var html = "";
+                            for(var i = 0;i<len;i++){
+                                var data = ret.data.data[i];
+                                if(data.order_type==2){//一元
+                                    html += ' <li class="list_form">\n' +
+                                        '            <div class="repair">\n' +
+                                        '                <div class="repairImg left">\n' +
+                                        '                    <img src="/weixin/images/logo2.jpg" alt="">\n' +
+                                        '                </div> <!--图片展示区域-->\n' +
+                                        '                <div class="repairTet right">\n' +
+                                        '                    <p><span class="repairPresent">'+data.product_name+'</span></p>\n' +
+                                        '                    <p><span class="repairPhone">特权享受</span></p>\n' +
+                                        '                    <p><span class="repairPlace">支付金额：'+data.product_amount+'</span></p>\n' +
+                                        '                    <p><span class="repairPTime">购买日期：'+data.create_time+'</span></p>\n' +
+                                        '                    <p><span class="repairName">创始会员</span><a href="'+data.id+'" class="repairGap refund">退款</a></p>\n' +
+                                        '                </div> <!--文本区域-->\n' +
+                                        '            </div>\n' +
+                                        '      </li>';
+                                }else {//产品：有绑定和未绑定
+                                    if(data.car_no==""||data.car_no==null){
+                                        data.car_no = '车牌号:未绑定';
+                                        html +=' <li class="list_form">\n' +
+                                            '            <div class="repair">\n' +
+                                            '                <div class="repairImg left">\n' +
+                                            '                    <img src="/weixin/images/logo2.jpg" alt="">\n' +
+                                            '                </div> <!--图片展示区域-->\n' +
+                                            '                <div class="repairTet right">\n' +
+                                            '                    <p><span class="repairPresent" style="margin-right: .1rem;">'+data.product_name+'</span><span class="repairCarN0">'+data.car_no+'</span></p>\n' +
+                                            '                    <p><span class="repairPhone">订单号:'+data.order_sn+'</span></p>\n' +
+                                            '                    <p><span class="repairPlace">支付金额：'+data.product_amount+'</span></p>\n' +
+                                            '                    <p><span class="repairTime">购买日期：'+data.create_time+'</span></p>\n' +
+                                            '                    <p><a href="'+data.id+'" class="repairGap refund">退款</a><a href="'+data.id+'" class="repairGap binding">前去绑定</a></p>\n' +
+                                            '                </div> <!--文本区域-->\n' +
+                                            '            </div>\n' +
+                                            '      </li>';
+                                    }else {
+                                        html += ' <li class="list_form">\n' +
+                                            '            <div class="repair">\n' +
+                                            '                <div class="repairImg left">\n' +
+                                            '                    <img src="/weixin/images/logo2.jpg" alt="">\n' +
+                                            '                </div> <!--图片展示区域-->\n' +
+                                            '                <div class="repairTet right">\n' +
+                                            '                    <p><span class="repairPresent" style="margin-right: .1rem;">'+data.product_name+'</span><span class="repairCarN0">'+data.car_no+'</span></p>\n' +
+                                            '                    <p><span class="repairPhone">订单号:'+data.order_sn+'</span></p>\n' +
+                                            '                    <p><span class="repairPlace">支付金额：'+data.product_amount+'</span></p>\n' +
+                                            '                    <p><span class="repairPTime">购买日期：'+data.create_time+'</span></p>\n' +
+                                            '                    <p><span class="repairName">'+data.audit_status+'</span><a href="'+data.id+'" class="repairGap refund">退款</a></p>\n' +
+                                            '                </div> <!--文本区域-->\n' +
+                                            '            </div>\n' +
+                                            '      </li>';
+                                    };
+                                }
+
+
+                            };
+                            $('#J_ListReady').append(html);
+
+                            /* 获取数据，并插入页面后，调用resole，并传入当前获取的记录列表集合 */
+                            def.resolve(ret.data.data);
+
+                            /* 页码自增1 */
+                            ++page;
+                        }else {
+                            if(page>1){
+                                console.log(page)
+                                $(".list-loading").text("亲,已全部显示")
+                            }else {
+                                $(".list-loading").text("暂无订单")
+                            }
+                        }
+
+                    }
+                });
+
+                return def.promise();
+            }
+        });
+        $('#already').on('click','a.binding', function(e){
+            e.preventDefault();
+            var payid = $(this).attr('href');
+            location.href = "/weixin/car/index?id="+payid+"&binding=0";
+        });
+        $('#already').on('click','a.refund', function(e){
+            e.preventDefault();
+            var $parent = $(this).parent().parent();
+            var payid = $(this).attr('href');
+            var cname = $parent.find(".repairPresent").text();
+            var carNo = $parent.find(".repairCarN0").text();
+            var searchUrl =encodeURI("/weixin/user/balanceEnquing?id="+payid+"&carid="+cname+"&carNo="+carNo);
+            window.location.href =searchUrl;
+        });
+    }(window, jQuery);
+</script>

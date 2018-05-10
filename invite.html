@@ -1,0 +1,45 @@
+{=include file="public/header.html"=}
+<style>
+    .invite_img{width: 100%;height: 15.5rem;background: url("/weixin/images/invite/1.jpg") no-repeat;background-size: 100%;}
+    .inImg-top{width: 95%;margin: 0 auto;}
+    .invite_pay{width:90%;display: flex;justify-content: space-around;flex-wrap: wrap;margin:.68rem auto .9rem;}
+    .pay_img{width: 28%;height: 1.9rem;border-radius: 5px;overflow: hidden;}
+    .invite_btn a{display: block;width: 72%;height: .8rem;background:url("/weixin/images/invite/2.jpg") no-repeat;background-size:100% 100%;margin: 0 auto;border-radius: 6px;}
+</style>
+<div class="wxtip" id="Tip" style="display: none">
+    <span class="wxtip-icon"></span>
+</div>
+<section class="g-flexview">
+    <div class="g-scrollview">
+         <div class="invite_img">
+             <div class="inImg-top">
+                 <img src="/weixin/images/invite/2.png" alt="">
+             </div>
+             <div class="invite_pay">
+                 <div class="pay_img">
+                     <img src="/weixin/images/invite/3.png" alt="">
+                 </div>
+                 <div class="pay_img">
+                     <img src="/weixin/images/invite/4.png" alt="">
+                 </div>
+                 <div class="pay_img">
+                     <img src="/weixin/images/invite/5.png" alt="">
+                 </div>
+             </div>
+             <div class="invite_btn">
+                 <a href="javascript:;" class="invite fontCenter fontC9 fontW">
+
+                 </a>
+             </div>
+         </div>
+    </div>
+</section>
+{=include file="public/footer.html"=}
+<script>
+    $(".invite").click(function () {
+        $("#Tip").css("display","block");
+    });
+    $(".wxtip").click(function () {
+        $("#Tip").css("display","none");
+    });
+</script>

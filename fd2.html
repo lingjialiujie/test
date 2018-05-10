@@ -1,0 +1,195 @@
+{=include file="public/header.html"=}
+<!--车辆认证-->
+<style>
+    .checkUpload .check_left{width: 50%;padding: .23rem 0;}
+    .checkUpload .check_right{width: 50%;padding: .23rem 0;}
+    .checkUpimg {position: relative;width: 55%;height: 1.83rem;}
+    .checkUpimg img{width: 100%;height: 1.83rem;position:absolute;right:0; top:0;}
+    .checkUpimg input{width: 100%;height: 1.83rem;opacity:0;filter: alpha(opacity=0);position:absolute;right:0; top:0; cursor: pointer; z-index:1;}
+    .result{background: rgba(0, 0, 0, 0.8);text-align: center;position: fixed;left:0;top: 0;width: 100%;height: 100%;z-index: 998;display: none;}
+    .result-icon{ width: 90%;height:2.6rem;border-radius: 5px;position: absolute;right: 0;top: 15%;left:0;bottom:0;margin:0 auto;text-decoration: none;}
+    .result-cancel{display:block;width: .55rem;height: .55rem;position: absolute;right:5%;top:5%;border-radius: 50%;}
+    .result-cancel span{line-height: .55rem;}
+</style>
+<section class="g-flexview">
+    <div class="result" id="Tip">
+        <a class="result-cancel border_light" onclick="cancel()">
+            <span class="fontS10 fontC9">X</span>
+        </a>
+        <div class="result-icon">
+            <div class="download">
+                <img src="" alt="" id="qrCode">
+            </div>
+
+        </div>
+    </div>
+    <div class="g-scrollview">
+        <div class="check_upload">
+            <div class="fontS6 padding_0 clear_bg">1.车辆左后侧照</div>
+            <div class="checkUpload">
+                <div class="left check_left">
+                    <div class="checkUpimg" style="margin: 0 auto;">
+                        <a href="javascript:;" class="check_grow">
+                            <img class="up-img" src="/weixin/images/upload_car/up_c2.jpg" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="right check_right">
+                    <div class="checkUpimg">
+                        <input type="file"  class="up">
+                        <img class="up-img" src="/weixin/img/upImg.png" alt="">
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="fontS6 padding_0 clear_bg">2.车辆右后侧照</div>
+            <div class="checkUpload">
+                <div class="left check_left">
+                    <div class="checkUpimg" style="margin: 0 auto;">
+                        <a href="javascript:;" class="check_grow">
+                            <img class="up-img" src="/weixin/images/upload_car/up_c5.jpg" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="right check_right">
+                    <div class="checkUpimg">
+                        <input type="file"  class="up">
+                        <img class="up-img" src="/weixin/img/upImg.png" alt="">
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="fontS6 padding_0 clear_bg">3.车辆左前侧照</div>
+            <div class="checkUpload">
+                <div class="left check_left">
+                    <div class="checkUpimg" style="margin: 0 auto;">
+                        <a href="javascript:;" class="check_grow">
+                            <img class="up-img" src="/weixin/images/upload_car/up_c3.jpg" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="right check_right">
+                    <div class="checkUpimg">
+                        <input type="file"  class="up">
+                        <img class="up-img" src="/weixin/img/upImg.png" alt="">
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="fontS6 padding_0 clear_bg">4.车辆右前侧照</div>
+            <div class="checkUpload">
+                <div class="left check_left">
+                    <div class="checkUpimg" style="margin: 0 auto;">
+                        <a href="javascript:;" class="check_grow">
+                            <img class="up-img" src="/weixin/images/upload_car/up_c4.jpg" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="right check_right">
+                    <div class="checkUpimg">
+                        <input type="file"  class="up">
+                        <img class="up-img" src="/weixin/img/upImg.png" alt="">
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear_bg" style="height:.3rem;"></div>
+        </div>
+    </div>
+    <footer class="m-tabbar">
+        <button type="button" class="btnB btn-danger">
+            上传
+        </button>
+    </footer>
+</section>
+{=include file="public/footer.html"=}
+<script>
+    !function (win, $) {
+        var dialog = win.YDUI.dialog;
+        function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            if (r != null) return unescape(r[2]); return null; //返回参数值
+        }
+        var id = getUrlParam('carId');
+        var person = "";        //图片地址拼接储存器
+        $(".checkUpload").on("change","input.up",function(){
+            var objUrl = getObjectURL(this.files[0]) ;
+            if (objUrl) {
+                $(this).parent().find(".up-img").attr("src", objUrl);
+            }
+            var formdata = new FormData();
+            formdata.append("file", $(this)[0].files[0]);
+            $.ajax({
+                url: "/weixin/upload/index",
+                type: "POST",
+                data: formdata,
+                processData: false,  // 告诉jQuery不要去处理发送的数据
+                contentType: false,   // 告诉jQuery不要去设置Content-Type请求头
+                success: function(response){
+                    if(response.code===0){
+                        person += response.data.url+',';
+                    }else if(response.code===403){
+                        dialog.alert("未登入，请登入");
+                        location.href = "/weixin/user/logging"
+                    }else if(response.code===400100000){
+                        dialog.alert('上传图片失败');
+                    }
+
+                },
+                error:function(){
+                    dialog.alert("图片大小不超过1M");}
+            });
+        });
+        $(".checkUpload").on("click","a.check_grow",function () {
+            var $src = $(this).children().attr("src");
+            $("#qrCode").attr("src",$src);
+            $("#Tip").css("display","block");
+        })
+        /*获取图片本地地址*/
+        function getObjectURL(file) {
+            var url = null ;
+            if (window.createObjectURL!=undefined) { // basic
+                url = window.createObjectURL(file) ;
+            } else if (window.URL!=undefined) { // mozilla(firefox)
+                url = window.URL.createObjectURL(file) ;
+            } else if (window.webkitURL!=undefined) { // webkit or chrome
+                url = window.webkitURL.createObjectURL(file) ;
+            }
+            return url ;
+        };
+
+        $(".btnB").click(function () {
+            if(person==""){
+                dialog.alert("上传车辆照片")
+            }else {
+                var len = person.split(",").length;
+                if (len != 5) {
+                    dialog.alert("请上传完整车辆照片")
+                }else {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/weixin/car/carPhoto',
+                        data: {type: 2,photoUrl:person,carId:id},
+                        success: function(pager){ //服务器返回对象
+                            if(pager.code===0){
+                                dialog.confirm('提交成功', function () {
+                                    location.href = "/weixin/car/upload"
+                                })
+                            }else {
+                                dialog.alert(pager.msg);
+                            }
+                        },
+                        error: function(){
+                            dialog.alert('系统故障，稍后再试');
+                        }
+                    });
+                }
+            }
+        });
+    }(window, jQuery);
+    function cancel() {
+        $(".result").css("display","none")
+    }
+</script>
+

@@ -1,0 +1,160 @@
+{=include file="public/header.html"=}
+<style>
+    .navbar-center .navbar-title{color: #fff;}
+    .navbar-item .back-ico::before{color: #fff;}
+    #count .total{background: #00ccff;line-height: .45rem;font-size: .28rem;color: #fff;}
+    #count .total{padding: 2% 0;}
+    #count .total span{display: inline-block;width: 49%;text-align: center}
+    #count .total .digit1{font-size: .9rem;line-height: 1rem}
+    #count .total .explain{font-size: .2rem;padding: .23rem .23rem 0 .23rem;line-height: .3rem;}
+    #count .total .explain b{color: red;font-size: .25rem;}
+    #count .total .explain i{color: #000000;}
+    #J_List li{margin-bottom:8px;box-shadow: 0 1px 10px #c7c7c7;border: 1px solid #f0eff5;border-radius: 6px;}
+    #J_List .repair{padding: .1rem;}
+    #J_List .repair .repairImg{width: 35%;padding: .1rem;}
+    #J_List .repair .repairImg img{width: 100%;height: 1.65rem;}
+    #J_List .repair .repairTet{width: 64%;}
+    #J_List .repair::after{content: "";display: block;clear: both;}
+    #J_List .repair .repairTet .repairName,.repairGap{display: inline-block;}
+    #J_List .repair .repairTet .repairName{font-size: .24rem;width: 78%;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}
+    #J_List .repair .repairTet .repairGap{text-align: right;font-size: .2rem;width: 21.5%;overflow: hidden;}
+    #J_List .repair .repairTet .repairPlace{overflow: hidden;text-overflow:ellipsis;white-space: nowrap;display: inline-block;width:100%}
+    #J_List .repair .repairTet p{line-height: .46rem;height: .46rem}
+    .plate,.project{font-size: .25rem;display: inline-block;margin-right: .23rem;}
+    .isStatus{font-size: .25rem;display: inline-block}
+</style>
+<div id="preloader_1">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+<section class="g-flexview">
+    <header class="m-navbar" style="background: #00ccff;">
+        <a href="/weixin/user/index" class="navbar-item" >
+            <i class="back-ico"></i>
+        </a>
+        <div class="navbar-center">
+            <span class="navbar-title">我的互助额度</span>
+        </div>
+        <div class="navbar-item">
+            <a href="/weixin/user/index">
+                <i class="icon-ucenter-outline" style="font-size: .5rem;color: #fff"></i>
+            </a>
+        </div>
+    </header>
+    <div id="count">
+        <div class="total">
+            <div class="amount"><span>购买项目总金额</span><span>平台互助金额</span></div>
+            <div class="digit1"><span class="car_sum"></span><span class="pe_sum"></span></div>
+            <div class="explain">
+                <b>注：</b>购买项目总金额是指在平台购买互助项目时支付的金额，购买项目总金额<i>≠</i>平台互助金额，平台互助金额<i>=</i>购买项目总金额-购买项目总金额×20%（平台管理费）
+            </div>
+        </div>
+    </div>
+    <div class="clear_bg" style="height: .1rem;"></div>
+    <div class="g-scrollview" id="J_List">
+        <ul id="J_ListContent">
+
+        </ul>
+    </div>
+</section>
+{=include file="public/footer.html"=}
+<script src="/weixin/js/islogin.js"></script>
+<script>
+    !function (win, $) {
+        var dialog = win.YDUI.dialog;
+        var page = 1,pageSize = 5;
+        $('#J_List').infiniteScroll({
+            binder: '#J_List',
+            pageSize: pageSize,
+            initLoad: true,
+            loadListFn: function () {
+                var def = $.Deferred();
+
+                /* 通过自定义的方法获取数据 */
+                $.ajax({
+                    type: 'POST',
+                    url: '/weixin/user/userAccount',
+                    dataType: 'json',
+                    data: {page:page},
+                    success: function (ret) {
+                        if(ret.code==0){
+                            $(".car_sum").text(ret.data.total_amount);
+                            var price = (ret.data.available_amount)+(ret.data.freeze_amount)
+                            $(".pe_sum").text(price);
+                            $("#preloader_1").css("display","none");
+                        }
+                        var result = ret.data.data.length;
+                        if(result!=0){
+                            var html = '';
+                            var statusText;
+                            for(var i = 0;i<result;i++){
+                                var j =ret.data.data[i];
+                                var status = j.audit_status;
+                                if(status==0){
+                                    statusText = "待审核";
+                                }else if(status==1){
+                                    statusText = "审核通过"
+                                }else if(status==2){
+                                    statusText = "审核不通过"
+                                }
+                                var pri = parseFloat(j.available_amount)+(ret.data.freeze_amount);
+                                html += ' <li class="list_form">\n' +
+                                    '         <a href="'+j.order_id+'" class="list_href" >\n' +
+                                    '            <input type="hidden"  class="style" value="'+status+'">\n' +
+                                    '            <div class="repair">\n' +
+                                    '                <div class="repairImg left">\n' +
+                                    '                    <img src="/weixin/images/logo2.jpg" alt="">\n' +
+                                    '                </div> <!--图片展示区域-->\n' +
+                                    '                <div class="repairTet right">\n' +
+                                    '                    <p><span class="repairName">'+j.product_name+'</span></p>\n' +
+                                    '                    <p><span class="repairPlace">绑定车辆：'+j.car_info+'</span></p>\n' +
+                                    '                    <p><span class="repairPhone">维修基金：'+pri+'</span></p>\n' +
+                                    '                    <p><span class="repairPresent">'+statusText+'</span></p>\n' +
+                                    '                </div> <!--文本区域-->\n' +
+                                    '            </div>\n' +
+                                    '         </a>\n'+
+                                    '      </li>';
+                            }
+
+                            $('#J_ListContent').append(html);
+
+                            /* 获取数据，并插入页面后，调用resole，并传入当前获取的记录列表集合 */
+
+                            def.resolve(ret.data.data);
+
+                            /* 页码自增1 */
+                            ++page;
+                        }else {
+                            if(page>1){
+                                $(".list-loading").text("亲,已全部显示")
+                            }else {
+                                $(".list-loading").text("暂时无数据")
+                            }
+                        }
+
+                    }
+                });
+
+                return def.promise();
+            }
+        });
+    $('#J_List').on('click','a', function(e){
+        e.preventDefault();
+        var status = $(this).find(".style").val();
+        if(status==1){
+            dialog.alert("审核通过后，无法申请退款")
+        }else {
+            var carid = $(this).find(".repairName").text();
+            var payid = $(this).attr('href');
+            var carNo = $(this).find(".repairPlace").text();//车辆信息
+            var searchUrl =encodeURI("/weixin/user/balanceEnquing?id="+payid+"&carid="+carid+"&carNo="+carNo);
+            window.location.href =searchUrl;
+        }
+
+
+    });
+    }(window, jQuery);
+</script>

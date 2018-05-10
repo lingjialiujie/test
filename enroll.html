@@ -1,0 +1,64 @@
+{=include file="public/header.html"=}
+<link rel="stylesheet" href="/weixin/css/login.css">
+<section class="g-flexview">
+    <div class="g-scrollview logg_bg">
+        <div class="loginFrame">
+            <div class="loginPhone">
+                <div class="left loginlt loginlt-img"></div>
+                <div class="right loginrt padding-left">
+                    <input type="text"  id="phone" class="cell-input fontC9" placeholder="请输入手机号"  />
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear" style="height: .36rem;"></div>
+            <div class="loginPwd ">
+                <div class="left loginlt loginlt-img2"></div>
+                <div class="right loginrt padding-left">
+                    <input type="password"  class="cell-input fontC9 pwd" placeholder="请输入密码"  />
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear" style="height: .36rem;"></div>
+            <div class="loginPwd ">
+                <div class="left loginlt loginlt-img2"></div>
+                <div class="right loginrt padding-left">
+                    <input type="password"  class="cell-input fontC9 pwd2" placeholder="请确认密码"  />
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear" style="height: .36rem"></div>
+            <div class="loginPwd loginInvite">
+                <div class="left loginlt loginlt-img3"></div>
+                <div class="right loginrt padding-left">
+                    <input type="password"  class="cell-input fontC9 invite" placeholder="如有邀请码请则输入"  />
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear" style="height: .36rem"></div>
+            <div class="loginPwd ">
+                <div class="left loginlt fontC9 fontS7 fontCenter" >
+                    验证码
+                </div>
+                <div class="right loginrt padding-left" >
+                    <input type="password"  class="cell-input fontC9 code" placeholder="请输入验证码"  />
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear" style="height: .5rem"></div>
+            <div class="loginForget fontLeft" style="color:#F6B370">
+                <a href="javascript:;" id="J_GetCode" class="left"  style="display:block;font-size: .3rem">获取验证码</a>
+                <a href="/weixin/user/logging?loggId=1" class="right"  style="display:block;font-size: .3rem">前往登录</a>
+                <div class="clear"></div>
+            </div>
+            <div class="clear" style="height: .4rem"></div>
+            <div class="loginBtn">
+                <a href="javascript:;" class="btnA fontC9 " style="font-size: .41rem">
+                    注册
+                </a>
+            </div>
+            <div class="clear" style="height: 1.2rem"></div>
+        </div>
+    </div>
+</section>
+{=include file="public/footer.html"=}
+<script src="/weixin/js/loggin.js"></script>

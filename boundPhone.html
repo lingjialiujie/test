@@ -1,0 +1,48 @@
+{=include file="public/header.html"=}
+<link rel="stylesheet" href="/weixin/css/login.css">
+<section class="g-flexview">
+    <div class="g-scrollview logg_bg">
+        <div class="loginFrame">
+            <input type="hidden"  id="phone" class="cell-input"   />
+            <div class="loginPwd ">
+                <div class="left loginlt loginlt-img2"></div>
+                <div class="right loginrt padding-left">
+                    <input type="password"  class="cell-input fontC9 pwd" placeholder="请输入密码"  />
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear" style="height: .36rem;"></div>
+            <div class="loginPwd ">
+                <div class="left loginlt loginlt-img2"></div>
+                <div class="right loginrt padding-left">
+                    <input type="password"  class="cell-input fontC9 pwd2" placeholder="请确认密码"  />
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear" style="height: .36rem"></div>
+            <div class="loginPwd ">
+                <div class="left loginlt fontC9 fontS7 fontCenter">
+                    验证码
+                </div>
+                <div class="right loginrt padding-left">
+                    <input type="password"  class="cell-input fontC9 code" placeholder="请输入验证码"  />
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="clear" style="height: .5rem"></div>
+            <div class="loginForget" style="color:#F6B370">
+                <a href="javascript:;" id="J_GetCode" class="left"  style="display:block;font-size: .3rem">获取验证码</a>
+                <div class="clear"></div>
+            </div>
+            <div class="clear" style="height: .4rem"></div>
+            <div class="loginBtn">
+                <a class="btnA fontC9 " style="font-size: .41rem">
+                    修改密码
+                </a>
+            </div>
+            <div class="clear" style="height: 1.2rem"></div>
+        </div>
+    </div>
+</section>
+{=include file="public/footer.html"=}
+<script src="/weixin/js/loggin.js"></script>
